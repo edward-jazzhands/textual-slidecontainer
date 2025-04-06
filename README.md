@@ -4,7 +4,7 @@
 
 This is a library that provides a custom container (widget) called the SlideContainer.
 
-It is designed to make it extremely simple to implement a sliding menu bar in yor Textual apps.
+It is designed to make it extremely simple to implement a sliding menu bar in yor [Textual](https://github.com/Textualize/textual) apps.
 
 ## Features
 
@@ -80,7 +80,7 @@ def compose(self):
         yield Static("Your widgets here")
 ```
 
-You can keep it docked to the top, but change the slight direction:
+You can set the slide direction and dock direction to be different:
 
 ```py
 def compose(self):
@@ -102,7 +102,7 @@ with SlideContainer(
     floating = False,            # default is True
     fade = True,
     duration = 0.6,                   # the default is 0.8     
-    easing_function = "out_cubic",    # default is the same as Textual's default: "in_out_cubic".                           
+    easing_function = "out_bounce",   # default is "out_cubic".                           
 ):
     yield Static("Your widgets here")
 ```
@@ -132,6 +132,7 @@ class TextualApp(App):
     """
     def compose(self):
 
+        # The container will start closed / hidden:
         with SlideContainer(slide_direction="left", default_state=False):
             yield Static("This is content in the slide container.")
         with Container(id="my_container"):
