@@ -152,6 +152,27 @@ class TextualApp(App):
 TextualApp().run()
 ```
 
+Check out the [source code of the demo app](https://github.com/edward-jazzhands/textual-slidecontainer/blob/master/src/textual_slidecontainer/demo.py) to see a more in-depth example.
+
+## `FinishedLoading` message and starting closed / hidden
+
+Because the container needs to know where it should be on the screen in open mode, starting in closed mode can sometimes reveal some graphical glitches that are tricky to deal with. In order to help solve this problem, the container provides a `FinishedLoading` message. This is only posted after the container has been moved to its closed position:
+
+```py
+from textual import on
+
+@on(SlideContainer.FinishedLoading)
+def finished_loading(self):
+    self.query_one("#your_container_here").loading = False
+    # or however you want to deal with your loading screens.
+
+# OR using the other method:
+def on_slide_container_finished_loading(self):
+    # handle your loading screen here.
+```
+
+You can see an example of this being used in the demo app.
+
 ## Questions, issues, suggestions?
 
 Feel free to post an issue.
