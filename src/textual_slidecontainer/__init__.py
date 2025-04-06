@@ -30,7 +30,7 @@ class SlideContainer(Container):
             fade: bool = False,
             dock_direction: str = "none",
             duration: float = 0.8,            
-            easing_function: str = "in_out_cubic",
+            easing_function: str = "out_cubic",
             **kwargs
         ):
         """Construct a Sliding Container widget.
@@ -92,6 +92,8 @@ class SlideContainer(Container):
         self.styles.dock = dock_direction     # default is "none" - but only if floating is False.
 
     def on_mount(self):
+        if self.styles.border != "none":
+            self.bo = 2
         self.call_after_refresh(self.init_closed_state)  
 
     def init_closed_state(self):
@@ -99,13 +101,13 @@ class SlideContainer(Container):
         if self.state is False:    # This means the container is starting closed.
 
             if self.slide_direction == "left":
-                self.styles.offset = Offset(-(self.size.width), 0)
+                self.styles.offset = Offset(-(self.size.width+self.bo), 0)
             elif self.slide_direction == "right":
-                self.styles.offset = Offset(self.size.width, 0)
+                self.styles.offset = Offset(self.size.width+self.bo, 0)
             elif self.slide_direction == "up":
-                self.styles.offset = Offset(0, -(self.size.height))           
+                self.styles.offset = Offset(0, -(self.size.height+self.bo))           
             elif self.slide_direction == "down":
-                self.styles.offset = Offset(0, self.size.height)
+                self.styles.offset = Offset(0, self.size.height+self.bo)
 
             if not self.floating:
                 self.display = False   # If not floating, hide the container to allow layout to change.
@@ -153,22 +155,22 @@ class SlideContainer(Container):
 
         if self.slide_direction == "left":
             self.animate(
-                "offset", Offset(-(self.size.width), 0),
+                "offset", Offset(-(self.size.width+self.bo), 0),
                 duration=self.duration, easing=self.easing_function
             )
         elif self.slide_direction == "right":
             self.animate(
-                "offset", Offset(self.size.width, 0),
+                "offset", Offset(self.size.width+self.bo, 0),
                 duration=self.duration, easing=self.easing_function
             )
         elif self.slide_direction == "up":
             self.animate(
-                "offset", Offset(0, -(self.size.height)),
+                "offset", Offset(0, -(self.size.height+self.bo)),
                 duration=self.duration, easing=self.easing_function
             )            
         elif self.slide_direction == "down":
             self.animate(
-                "offset", Offset(0, self.size.height),
+                "offset", Offset(0, self.size.height+self.bo),
                 duration=self.duration, easing=self.easing_function
             )            
 

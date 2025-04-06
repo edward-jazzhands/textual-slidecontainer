@@ -14,12 +14,13 @@ class SlideContainerDemo(App):
 
     DEFAULT_CSS = """
     .slidecontainer { background: $panel; align: center middle;
-        &.leftright {width: 22; height: 1fr; background: $surface;}
-        &.topbottom {width: 1fr; height: 5;}
+        &.leftright {width: 24; height: 1fr; background: $surface;}
+        &.topbottom {width: 1fr; height: 6;}
     }
-    .top_docked {dock: top;}            # These are not used for the SlidingContainer
-    .bottom_docked {dock: bottom;}      # Its just styling for the demo app.
-    .right_docked {dock: right;}
+    #right_slidecontainer {border: heavy blue;}    # This demonstrates how it can handle borders fine.
+    .top_docked {dock: top;}         
+    .bottom_docked {dock: bottom;}  # These are not used for the SlidingContainer
+    .right_docked {dock: right;}    # Its just styling for the demo app.
     .left_docked {dock: left;}
     .w_1fr {width: 1fr;}
     .h_1fr {height: 1fr;}
@@ -122,7 +123,6 @@ class SlideContainerDemo(App):
     def finished_loading(self):
         """This is a madlad way of making a loading screen. The main container starts
         at opacity 0.0 and fades in to 1.0 when the slidecontainer is done loading."""
-        self.log("Slide container finished loading.")
         
         self.main_container.styles.animate("opacity", value=1.0, duration=0.3)
         # self.main_container.styles.opacity = 1.0     # this would be the simpler way of doing it.
