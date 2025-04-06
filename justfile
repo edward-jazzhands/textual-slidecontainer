@@ -19,3 +19,9 @@ del-env:
 # Removes all environment and build stuff
 reset: clean del-env
   echo "All environment and build stuff removed."
+
+build: clean
+  uv build
+
+publish: build
+  uv publish

@@ -25,6 +25,7 @@ Install with:
 ```sh
 pip install textual-slidecontainer
 ```
+
 or for uv users:
 
 ```sh
@@ -75,12 +76,12 @@ def compose(self):
 
 Set the container's width and height in CSS as you usually would. Note that the above example will dock to the top of your screen automatically because it is in floating mode (floating is the default).
 
-Many people will want it to start closed / hidden. Simply set the default state to False:
+If you'd like the container to start closed/hidden, simply set `start_open` to False:
 
 ```py
 def compose(self):
     with SlideContainer(
-        id = "my_slidecontainer", slide_direction = "left", default_state = False      
+        id = "my_slidecontainer", slide_direction = "left", start_open = False      
     ):
         yield Static("Your widgets here")
 ```
@@ -101,7 +102,7 @@ Here's an example using all the arguments:
 with SlideContainer(
     classes = "my_container_classes",
     id = "my_slidecontainer",
-    default_state = False        # False = closed
+    start_open = False         
     slide_direction = "left",
     dock_direction = "top",      # dock to the top but slide left
     floating = False,            # default is True
@@ -138,7 +139,7 @@ class TextualApp(App):
     def compose(self):
 
         # The container will start closed / hidden:
-        with SlideContainer(slide_direction="left", default_state=False):
+        with SlideContainer(slide_direction="left", start_open=False):
             yield Static("This is content in the slide container.")
         with Container(id="my_container"):
             yield Button("Show/Hide slide container", id="toggle_slide")
