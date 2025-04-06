@@ -1,5 +1,7 @@
 # textual-slidecontainer
 
+![textual-slidecontainer](https://github.com/user-attachments/assets/aec1fa21-2994-40e7-9c02-e22b299b837a)
+
 This is a library that provides a custom Container (widget) called the SlideContainer.
 
 It is designed to make it extremely simple to implement a sliding menu bar in yor Textual apps.
