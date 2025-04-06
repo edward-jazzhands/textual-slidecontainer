@@ -1,0 +1,21 @@
+[project]
+name = "textual-slidecontainer"
+version = "0.1.0"
+description = "A Sliding Container widget for Textual"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    { name = "edward-jazzhands", email = "ed.jazzhands@gmail.com" }
+]
+dependencies = [
+    "textual>=3.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "textual-dev>=1.7.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
