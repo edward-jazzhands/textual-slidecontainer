@@ -88,7 +88,7 @@ class SlideContainerDemo(App):
                     classes = "slidecontainer leftright",   
                     id = "right_slidecontainer",             # Floating mode is the default.
                     slide_direction = "right",      # When floating, It'll auto-dock to the same direction.        
-                    default_state = False,
+                    start_open = False,
                     fade=True,
                 ):
                     yield Button("Hide", id="button_right")
@@ -103,7 +103,7 @@ class SlideContainerDemo(App):
                 id = "bottom_slidecontainer",         #  as the slide direction.
                 slide_direction = "right",      # <-  Try changing this to left or down. (up works but it'll look weird.)
                 dock_direction = "bottom",            
-                default_state = False,
+                start_open = False,
             ):
                 yield Button("Hide", id="button_bottom")
                 yield Static(

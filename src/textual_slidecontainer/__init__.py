@@ -26,7 +26,7 @@ class SlideContainer(Container):
             slide_direction: str,
             *args,
             floating: bool = True,
-            default_state: bool = True,
+            start_open: bool = True,
             fade: bool = False,
             dock_direction: str = "none",
             duration: float = 0.8,            
@@ -40,7 +40,7 @@ class SlideContainer(Container):
             slide_direction: Can be "left", "right", "up", or "down".      
                 NOTE: This is not tied to position or dock direction. Feel free to experiment.
             floating: Whether the container should float overtop on its own layer.
-            default_state: The default state of the container. True = open, False = closed.
+            start_open: Whether the container should start open(visible) or closed(hidden).
             fade: Whether to also fade the container when it slides.
             dock_direction: The direction to dock the container to. Can be "left", "right", "top", "bottom", "none".   
                 NOTE: When floating is True, this is automatically set to the same direction 
@@ -64,7 +64,7 @@ class SlideContainer(Container):
 
         self.slide_direction = slide_direction
         self.floating = floating
-        self.set_reactive(SlideContainer.state, default_state)  # need to handle this manually
+        self.set_reactive(SlideContainer.state, start_open)  # need to handle this manually
         self.fade = fade
         self.duration = duration
         self.easing_function = easing_function
@@ -86,7 +86,7 @@ class SlideContainer(Container):
                 elif slide_direction == "down":
                     dock_direction = "bottom"
 
-            if default_state is False:
+            if start_open is False:
                 self.styles.opacity = 0.0
 
         self.styles.dock = dock_direction     # default is "none" - but only if floating is False.

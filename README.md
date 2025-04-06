@@ -25,6 +25,11 @@ Install with:
 ```sh
 pip install textual-slidecontainer
 ```
+or for uv users:
+
+```sh
+uv add textual-slidecontainer
+```
 
 Import into your project with:
 
@@ -44,7 +49,7 @@ uvx textual-slidecontainer
 pipx textual-slidecontainer
 ```
 
-Or if you have it downloaded into your python environment, just run it using the entry script:
+Or if you have it downloaded into your python environment, run it using the entry script:
 
 ```sh
 textual-slidecontainer
