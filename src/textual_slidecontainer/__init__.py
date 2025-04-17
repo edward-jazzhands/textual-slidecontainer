@@ -1,4 +1,5 @@
 "Package for the SlideContainer widget for Textual."
+from __future__ import annotations
 from textual.containers import Container
 from textual.geometry import Offset
 from textual.reactive import reactive
@@ -8,10 +9,24 @@ from textual.message import Message
 class SlideContainer(Container):
     """See init for usage and information."""
 
-    class FinishedLoading(Message):
+    class InitClosed(Message):
         """Message sent when the container is ready.   
-        This is sent after the container is mounted and the default state is set."""
-        pass
+        This is only sent if the container is starting closed."""
+        def __init__(self, container: SlideContainer) -> None:
+            super().__init__()
+            self.container = container
+            """The container that is ready."""
+
+    class SlideCompleted(Message):
+        """Message sent when the container is opened or closed.   
+        This is sent after the animation is complete."""
+        def __init__(self, state: bool, container: SlideContainer) -> None:
+            super().__init__()
+            self.state = state
+            """The state of the container.  \n True = container open, False = container closed."""
+            self.container = container
+            """The container that has finished sliding."""        
+        
 
     state: reactive[bool] = reactive(True)
     """State of the container.  \n True = container open, False = container closed.   
@@ -115,7 +130,7 @@ class SlideContainer(Container):
                 if self.fade is False:      # if it is floating, it was set to 0 opacity earlier.
                     self.styles.opacity = 1.0     #  Must change back.
 
-        self.post_message(self.FinishedLoading())  # Notify that the container is ready.
+        self.post_message(self.InitClosed(self))  # Notify that the container is ready.
 
     def watch_state(self, old_state: bool, new_state: bool) -> None:
         if new_state == old_state:
@@ -143,8 +158,10 @@ class SlideContainer(Container):
             self.styles.animate(
                 "opacity", value=1.0,
                 duration=self.duration, easing=self.easing_function
-            ) # reset to original opacity            
+            ) # reset to original opacity         
 
+        self.set_timer(self.duration, lambda: self.post_message(self.SlideCompleted(True, self)))            
+               
     def _slide_closed(self):
         """Technically you can call this directly. It should be fine.   
         But you should use the toggle() method or set the state property instead."""      
@@ -180,4 +197,6 @@ class SlideContainer(Container):
                 duration=self.duration, easing=self.easing_function
             )
         if not self.floating:
-            self.set_timer(self.duration, lambda: setattr(self, "display", False))   
+            self.set_timer(self.duration, lambda: setattr(self, "display", False))
+
+        self.set_timer(self.duration, lambda: self.post_message(self.SlideCompleted(False, self)))

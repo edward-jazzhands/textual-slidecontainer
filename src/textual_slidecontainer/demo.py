@@ -1,4 +1,5 @@
 """Contains the demo app."""
+from __future__ import annotations
 from typing import cast
 
 # Textual imports
@@ -64,7 +65,7 @@ class SlideContainerDemo(App):
                     id = "left_slidecontainer",
                     slide_direction = "left", 
                     floating = False,
-                    duration = 0.6,                    # <-- you can change the animation duration.
+                    duration = 1.0,                    # <-- you can change the animation duration.
                     easing_function = "out_cubic",     # <-- you can change the easing function.                            
                 ):
                     yield Button("Hide", id="button_left")
@@ -119,13 +120,18 @@ class SlideContainerDemo(App):
         for item in ["left", "right", "top", "bottom"]:         # this is for aesthetic reasons.
             self.query_one(f"#button_{item}").can_focus = False  # there's bindings set, no need to cycle focus.
 
-    @on(SlideContainer.FinishedLoading)
+    @on(SlideContainer.InitClosed)
     def finished_loading(self):
         """This is a madlad way of making a loading screen. The main container starts
         at opacity 0.0 and fades in to 1.0 when the slidecontainer is done loading."""
         
         self.main_container.styles.animate("opacity", value=1.0, duration=0.3)
         # self.main_container.styles.opacity = 1.0     # this would be the simpler way of doing it.
+
+    @on(SlideContainer.SlideCompleted)
+    def slide_completed(self, event: SlideContainer.SlideCompleted):
+
+        self.notify(f"Slide completed: {event.container}: {event.state}")
 
     #### ACTIONS ###
 
