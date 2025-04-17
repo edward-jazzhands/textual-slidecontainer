@@ -1,10 +1,13 @@
 "Package for the SlideContainer widget for Textual."
 from __future__ import annotations
+from typing import Literal
 from textual.containers import Container
 from textual.geometry import Offset
 from textual.reactive import reactive
 from textual.message import Message
 
+slide_directions = Literal["left", "right", "up", "down"]
+dock_directions = Literal["left", "right", "top", "bottom", "none"]
 
 class SlideContainer(Container):
     """See init for usage and information."""
@@ -38,12 +41,12 @@ class SlideContainer(Container):
 
     def __init__(
             self,
-            slide_direction: str,
+            slide_direction: slide_directions,
             *args,
             floating: bool = True,
             start_open: bool = True,
             fade: bool = False,
-            dock_direction: str = "none",
+            dock_direction: dock_directions = "none",
             duration: float = 0.8,            
             easing_function: str = "out_cubic",
             **kwargs
@@ -94,8 +97,10 @@ class SlideContainer(Container):
             self.styles.layer = "sliding_containers"
 
             if dock_direction == "none":                  # NOTE: If floating, then it must be docked *somewhere*.
-                if slide_direction in ["left", "right"]:
-                    dock_direction = self.slide_direction
+                if slide_direction == "left":
+                    dock_direction = "left"
+                elif slide_direction == "right":
+                    dock_direction = "right"
                 elif slide_direction == "up":
                     dock_direction = "top"
                 elif slide_direction == "down":

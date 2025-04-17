@@ -1,6 +1,6 @@
 [project]
 name = "textual-slidecontainer"
-version = "0.3.0"
+version = "0.3.1"
 description = "A Sliding Container widget for Textual"
 readme = "README.md"
 requires-python = ">=3.8.1"

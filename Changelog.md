@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+- Changed slide_direction and dock_direction arguments to Literals to improve type hinting.
+
 ## 0.3.0
 
 - Added a `SlideCompleted` message to the container. This will be sent when the container is finished sliding and contains the state of the slide (True = open, False = closed) as well as a reference to the slide container.
