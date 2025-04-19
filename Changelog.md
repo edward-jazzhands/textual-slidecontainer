@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.3
+
+- Also changed easing_function argument to string Literal for type hinting
+- Added `control` property for the messages so that a selector can be used.
+
 ## 0.3.1
 
 - Changed slide_direction and dock_direction arguments to Literals to improve type hinting.

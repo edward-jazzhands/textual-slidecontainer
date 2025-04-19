@@ -6,8 +6,15 @@ from textual.geometry import Offset
 from textual.reactive import reactive
 from textual.message import Message
 
-slide_directions = Literal["left", "right", "up", "down"]
-dock_directions = Literal["left", "right", "top", "bottom", "none"]
+SLIDE_DIRECTION = Literal["left", "right", "up", "down"]
+DOCK_DIRECTION = Literal["left", "right", "top", "bottom", "none"]
+EASING_FUNC = Literal[
+    "none", "round", "linear", "in_sine", "in_out_sine", "out_sine", "in_quad", "in_out_quad",
+    "out_quad", "in_cubic", "in_out_cubic", "out_cubic", "in_quart", "in_out_quart", "out_quart",
+    "in_quint", "in_out_quint", "out_quint", "in_expo", "in_out_expo", "out_expo", "in_circ",
+    "in_out_circ", "out_circ", "in_back", "in_out_back", "out_back", "in_elastic", "in_out_elastic",
+    "out_elastic", "in_bounce", "in_out_bounce", "out_bounce"
+]
 
 class SlideContainer(Container):
     """See init for usage and information."""
@@ -15,20 +22,32 @@ class SlideContainer(Container):
     class InitClosed(Message):
         """Message sent when the container is ready.   
         This is only sent if the container is starting closed."""
+
         def __init__(self, container: SlideContainer) -> None:
             super().__init__()
             self.container = container
             """The container that is ready."""
 
+        @property
+        def control(self) -> SlideContainer:
+            """The SlideContainer that sent the message."""
+            return self.container
+
     class SlideCompleted(Message):
         """Message sent when the container is opened or closed.   
         This is sent after the animation is complete."""
+
         def __init__(self, state: bool, container: SlideContainer) -> None:
             super().__init__()
             self.state = state
             """The state of the container.  \n True = container open, False = container closed."""
             self.container = container
-            """The container that has finished sliding."""        
+            """The container that has finished sliding."""
+
+        @property
+        def control(self) -> SlideContainer:
+            """The SlideContainer that sent the message."""
+            return self.container                   
         
 
     state: reactive[bool] = reactive(True)
@@ -41,14 +60,14 @@ class SlideContainer(Container):
 
     def __init__(
             self,
-            slide_direction: slide_directions,
+            slide_direction: SLIDE_DIRECTION,
             *args,
             floating: bool = True,
             start_open: bool = True,
             fade: bool = False,
-            dock_direction: dock_directions = "none",
+            dock_direction: DOCK_DIRECTION = "none",
             duration: float = 0.8,            
-            easing_function: str = "out_cubic",
+            easing_function: EASING_FUNC = "out_cubic",
             **kwargs
         ):
         """Construct a Sliding Container widget.

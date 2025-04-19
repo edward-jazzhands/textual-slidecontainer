@@ -12,10 +12,9 @@ It is designed to make it extremely simple to implement a sliding menu bar in yo
 - Set the direction - Containers can slide to the left, right, top, or bottom, independently of where they are on the screen.
 - Enable or disable Floating mode - With a simple boolean, containers can switch between floating on top of your app, or being a part of it and affecting the layout.
 - Set the default state - Containers can be set to start in closed mode.
-- Fade in/out - Containers can be set to fade while they slide
 - Set the container to dock as an initialization argument.
 - Floating containers automatically dock to the edge they move towards (this can be changed).
-- Change how the animation looks with the duration and easing_function arguments.
+- Change how the animation looks with the duration, fade, and easing_function arguments.
 - Included demo application which has comments in the code.
 
 ## Installation
@@ -174,7 +173,7 @@ Example usage:
 ```py
 from textual import on
 
-@on(SlideContainer.SlideCompleted)
+@on(SlideContainer.SlideCompleted, "#my_container")    # Note the selector is optional.
 def my_slide_completed(self, event: SlideContainer.SlideCompleted):
 
     self.notify(f"Slide completed: {event.container}: {event.state}")
@@ -193,7 +192,7 @@ Because the container needs to know where it should be on the screen in open mod
 ```py
 from textual import on
 
-@on(SlideContainer.InitClosed)
+@on(SlideContainer.InitClosed, "#my_container")    # Note the selector is optional.
 def my_container_loaded(self, event: SlideContainer.InitClosed):
     self.log(f"Slide container initialized closed: {event.container}")
     # However you want to deal with your loading logic  here.
