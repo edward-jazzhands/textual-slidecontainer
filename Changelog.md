@@ -3,7 +3,7 @@
 ## 0.4.0
 
 - Added `open` and `close` methods to the container to improve API.
-- Changed layering so each window is on its own layer.
+- Changed layering so each container is on its own layer.
 - Enhanced type hinting: Package now passes MyPy and Pyright in strict mode.
 - Added py.typed file to mark package as typed for Pyright/MyPy.
 - Changed animations to use self.animate's `on_complete` argument (more idiomatic).
