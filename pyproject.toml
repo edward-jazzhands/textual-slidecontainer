@@ -1,24 +1,58 @@
 [project]
 name = "textual-slidecontainer"
-version = "0.3.3"
+version = "0.4.0"
 description = "A Sliding Container widget for Textual"
 readme = "README.md"
 requires-python = ">=3.8.1"
 authors = [
     { name = "edward-jazzhands", email = "ed.jazzhands@gmail.com" }
 ]
+
+license = { text = "MIT" }
+
+keywords = ["python", "textual", "tui", "slidecontainer", "widget"]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
 dependencies = [
     "textual>=3.0.0",
 ]
 
+[project.urls]
+Repository = "https://github.com/edward-jazzhands/textual-slidecontainer"
+Changelog = "https://github.com/edward-jazzhands/textual-slidecontainer/blob/master/Changelog.md"
+
 [dependency-groups]
 dev = [
+    "black>=24.8.0",
+    "mypy>=1.14.1",
+    "ruff>=0.11.8",
     "textual-dev>=1.7.0",
 ]
+
+[project.scripts]
+textual-slidecontainer = "textual_slidecontainer.demo:run_demo"
+
+[tool.black]
+line-length = 110
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[project.scripts]
-textual-slidecontainer = "textual_slidecontainer.demo:run_demo"
+[tool.mypy]
+python_version = "3.10"
+pretty = true
+strict = true

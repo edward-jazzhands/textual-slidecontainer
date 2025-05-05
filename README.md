@@ -63,7 +63,7 @@ uv run textual-slidecontainer
 
 ## Usage
 
-Most basic usage.:
+### Most basic usage
 
 ```py
 from textual_slidecontainer import SlideContainer
@@ -75,6 +75,8 @@ def compose(self):
 
 Set the container's width and height in CSS as you usually would. Note that the above example will dock to the top of your screen automatically because it is in floating mode (floating is the default).
 
+### Start closed / Hidden
+
 If you'd like the container to start closed/hidden, simply set `start_open` to False:
 
 ```py
@@ -84,6 +86,8 @@ def compose(self):
     ):
         yield Static("Your widgets here")
 ```
+
+### Different slide and dock directions
 
 You can set the slide direction and dock direction to be different:
 
@@ -95,24 +99,59 @@ def compose(self):
         yield Static("Your widgets here")
 ```
 
+### All Arguments
+
 Here's an example using all the arguments:
 
 ```py
 with SlideContainer(
     classes = "my_container_classes",
     id = "my_slidecontainer",
-    start_open = False         
+    start_open = False,         
     slide_direction = "left",
     dock_direction = "top",      # dock to the top but slide left
     floating = False,            # default is True
     fade = True,
     duration = 0.6,                   # the default is 0.8     
-    easing_function = "out_bounce",   # default is "out_cubic".                           
+    easing_function = "out_bounce"    # default is "out_cubic".                           
 ):
     yield Static("Your widgets here")
 ```
 
-Here's a demonstration of it being used in a full app:
+### Ways of Making the Container
+
+You can also use the other Textual methods of using a container: passing in a list of children, or making a custom class that inherits from SlideContainer.
+
+Passing in a list of children (the normal Textual syntax):
+
+```py
+window_widgets: list[Widget] = [
+    Button("Label", id="button_foo"),
+    Static("Your widgets here")
+]
+yield SlideContainer(*window_widgets)
+```
+
+You can just as easily define everything you want in a custom container (again, the normal Textual syntax):
+
+```py
+class MySlideContainer(SlideContainer):
+
+    def __init__(self):
+        super().__init__(
+            slide_direction="top",
+            start_open=False,
+            id="your_slidecontainer"
+        )
+
+    def compose(self):
+        yield Button("Label", id="button_foo")
+        yield Static("Your widgets here")
+```
+
+### Full demonstration
+
+Here's a full demonstration of it being used in a small app. You can copy and paste this code.
 
 ```py
 from textual.app import App

@@ -1,27 +1,58 @@
+# Install the package
+install:
+  uv sync
+
 # Run the demo
 run:
-  uv run src/textual_slidecontainer/demo.py
+  uv run textual-slidecontainer
 
 # Run the demo in dev mode
 run-dev:
   uv run textual run --dev textual_slidecontainer.demo:SlideContainerDemo
 
-# Remove the build and dist directories
+# Run the console
+console:
+  uv run textual console -x EVENT -x SYSTEM
+
+# Runs ruff, exits with 0 if no issues are found
+lint:
+  uv run ruff check . || (echo "Ruff found issues. Please address them." && exit 1)
+
+# Runs mypy, exits with 0 if no issues are found
+typecheck:
+  uv run mypy . || (echo "Mypy found issues. Please address them." && exit 1)
+
+# Runs black
+format:
+  uv run black src
+
+# Runs ruff, mypy, and black
+all-checks: lint typecheck format
+  echo "All pre-commit checks passed. You're good to publish."
+
+# Remove build/dist directories and pyc files
 clean:
   rm -rf build dist
   find . -name "*.pyc" -delete
 
+# Remove tool caches
+clean-caches:
+  rm -rf .mypy_cache
+  rm -rf .ruff_cache
+
 # Remove the virtual environment and lock file
 del-env:
   rm -rf .venv
-  rm -rf uv.lockjust
+  rm -rf uv.lock
 
 # Removes all environment and build stuff
-reset: clean del-env
-  echo "All environment and build stuff removed."
+reset: clean del-env install
+  echo "Environment reset."
 
-build: clean
+# Runs all-checks and cleaning stages before building
+build: all-checks clean
   uv build
 
+# Runs build stage before publishing
 publish: build
   uv publish
