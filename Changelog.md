@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+- `on_mount` method was renamed to `_on_mount` to avoid conflicting with people making their own on_mount method
+
 ## 0.4.0
 
 - Added `open` and `close` methods to the container to improve API.

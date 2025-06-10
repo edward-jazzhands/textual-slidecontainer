@@ -15,6 +15,7 @@ from textual.geometry import Offset
 from textual.reactive import reactive
 from textual.message import Message
 from textual.widget import Widget
+import textual.events as events
 
 SLIDE_DIRECTION = Literal["left", "right", "up", "down"]
 DOCK_DIRECTION = Literal["left", "right", "top", "bottom", "none"]
@@ -181,7 +182,8 @@ class SlideContainer(Container):
 
         self.styles.dock = dock_direction  # default is "none" - but only if floating is False.
 
-    def on_mount(self) -> None:
+    def _on_mount(self, event: events.Mount) -> None:
+        super()._on_mount(event)
         self.call_after_refresh(self.init_closed_state)
 
     def init_closed_state(self) -> None:
