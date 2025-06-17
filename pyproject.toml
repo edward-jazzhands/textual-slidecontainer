@@ -1,9 +1,9 @@
 [project]
 name = "textual-slidecontainer"
-version = "0.4.1"
+version = "0.5.0"
 description = "A Sliding Container widget for Textual"
 readme = "README.md"
-requires-python = ">=3.8.1"
+requires-python = ">=3.9"
 authors = [
     { name = "edward-jazzhands", email = "ed.jazzhands@gmail.com" }
 ]

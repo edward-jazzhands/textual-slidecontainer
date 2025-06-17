@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.0 (2025-06-17) - Better positioning features
+
+- Breaking Change: The `dock_direction` argument has been removed and replaced with a new `dock_position` argument. The dock_position argument now allows for direct positioning of the SlideContainer in more specific locations:
+    topleft, top, topright
+    left, right
+    bottomleft, bottom, bottomright
+This makes it significantly easier to make SlideContainers of variable height (no longer need to be 1fr). Previously it was a headache to get them aligned in a specific location, this makes it easy.
+- New feature: added arguments `offset_x` and `offset_y` to the SlideContainer. These will override the dock positioning when set, so that it's possible to dial in absolute values if desired.
+- Breaking Change: The `InitClosed` message was renamed to `InitCompleted` because it's now called regardless of starting closed or not.
+- Added a new `set_slide_direction` method. This makes it possible to change the slide direction while the program is running. It's a bit silly, but why not.
+- Updated the demo to show off some of the new features.
+
+## 0.4.2 (2025-06-14)
+
+- Modified the SlideContainer so now it will always set display to False when it is closed. This will prevent anything in the container from being focused while it is closed, which is what most people will expect. Previously it was not doing this behavior consistently.
+- Moved TCSS for demo app from CSS block in App class to demostyles.tcss
+- Modified demo to allow cycling focus with Tab, which makes it more obvious what setting display to False on the containers is actually doing.
+
 ## 0.4.1
 
 - `on_mount` method was renamed to `_on_mount` to avoid conflicting with people making their own on_mount method

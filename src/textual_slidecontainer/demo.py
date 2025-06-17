@@ -14,7 +14,7 @@ from textual import on
 from textual.binding import Binding
 
 from textual.widget import Widget
-from textual.widgets import Header, Footer, Static, Button, RichLog
+from textual.widgets import Header, Footer, Static, Button, RichLog, Switch
 from textual.containers import Horizontal, Container
 
 from textual_slidecontainer.slidecontainer import SlideContainer
@@ -24,50 +24,46 @@ class MySlideContainer(SlideContainer):
 
     def __init__(self) -> None:
         super().__init__(
-            slide_direction="right",
-            dock_direction="bottom",
+            slide_direction="down",
+            dock_position="bottomright",
             start_open=False,
-            classes="slidecontainer topbottom",  # Dock direction does not have to be the same
-            id="bottom_slidecontainer",  #  as the slide direction.
+            classes="slidecontainer bottom",
+            id="bottom_slidecontainer",
         )
 
     def compose(self) -> ComposeResult:
 
-        yield Button("Hide", id="button_bottom")
-        yield Static(
-            "Fade is [red]off.[/red] " "Default is [yellow]closed.[/yellow] " "Menu is [yellow]floating."
-        )
+        with Container():
+            with Horizontal():
+                yield Button("Hide", id="button_bottom")
+                yield Switch(id="slide_dir_switch")
+                yield Static("Change slide direction. \nCurrently: [yellow]down[/yellow]")
+            yield Static(
+                "Fade is [red]off.[/red] " "Default is [yellow]closed.[/yellow] " "Menu is [yellow]floating."
+            )
+
+    @on(Switch.Changed)
+    def handle_switch_change(self, event: Switch.Changed) -> None:
+        """Change the slide direction based on the switch state."""
+        if event.switch.value:
+            self.set_slide_direction("right")
+            self.query_one(Static).update("Change slide direction. \nCurrently: [yellow]right[/yellow]")
+        else:
+            self.set_slide_direction("down")
+            self.query_one(Static).update("Change slide direction. \nCurrently: [yellow]down[/yellow]")
 
 
 class SlideContainerDemo(App[None]):
 
-    DEFAULT_CSS = """
-    .slidecontainer { background: $panel; align: center middle;
-        &.leftright {width: 24; height: 1fr; background: $surface;}
-        &.topbottom {width: 1fr; height: 6;}
-    }
-    #right_slidecontainer {
-        border-left: heavy blue;        /* These demonstrate how it can handle borders */
-        border-right: heavy blue;       /* You can disable or change any of these. */
-        border-top: heavy blue;         /* It also supports dynamically modifying the CSS */
-        border-bottom: heavy blue;      /* through Python or dev mode hot reloading. */
-    }   
-    /* The CSS below is just styling for the demo app. Not used by the SlideContainers. */
-    RichLog {width: 37; height: 12; border: tall $primary;}    
-    .top_docked {dock: top;}         
-    .bottom_docked {dock: bottom;}  
-    .right_docked {dock: right;}   
-    .w_1fr {width: 1fr;}
-
-    #main_content {align: center middle; border: heavy red;}
-    Static {width: auto;}
-    """
+    CSS_PATH = "demostyles.tcss"
 
     BINDINGS = [
         Binding("ctrl+w", "toggle_container('top')", "Top menu"),
         Binding("ctrl+a", "toggle_container('left')", "Left menu"),
         Binding("ctrl+s", "toggle_container('bottom')", "Bottom menu"),
         Binding("ctrl+d", "toggle_container('right')", "Right menu"),
+        Binding("t", "toggle_borders", "Toggle main screen borders"),
+        Binding("l", "log_layers", "Log layers"),
     ]
 
     TITLE = "Textual-SlideContainer Demo"
@@ -88,7 +84,7 @@ class SlideContainerDemo(App[None]):
 
             # 1) Context manager
             with SlideContainer(
-                classes="slidecontainer topbottom",
+                classes="slidecontainer top",
                 id="top_slidecontainer",
                 slide_direction="up",
                 floating=False,  # Note this is True by default
@@ -124,14 +120,14 @@ class SlideContainerDemo(App[None]):
                 )
 
                 with Container(id="main_content"):
-                    yield Static("This is content at the top left.", classes="top_docked")
+                    yield Static("This is content at the top left.", classes="top_docked_text")
                     yield Static(
-                        "This is content \non the right \nthat can get blocked.", classes="right_docked"
+                        "This is content \non the right \nthat can be blocked.", classes="right_docked_text"
                     )
                     yield RichLog()
                     yield Static(
-                        "This is content at the bottom that can get blocked by the floating menu.",
-                        classes="bottom_docked w_1fr",
+                        "This is content at the bottom that can be blocked.",
+                        classes="bottom_docked_text",
                     )
 
                 with SlideContainer(
@@ -140,6 +136,8 @@ class SlideContainerDemo(App[None]):
                     slide_direction="right",  # When floating, It'll auto-dock to the same direction.
                     start_open=False,
                     fade=True,
+                    dock_position="right",
+                    # offset_y = 5      <-- you can enter a manual offset if you prefer.
                 ):
                     yield Button("Hide", id="button_right")
                     yield Static(
@@ -154,16 +152,20 @@ class SlideContainerDemo(App[None]):
         yield Footer()
 
     def on_mount(self) -> None:
-
-        for item in ["left", "right", "top", "bottom"]:
-            self.query_one(f"#button_{item}").can_focus = False
-            # this is for aesthetic reasons.
-            # there's bindings set, no need to cycle focus on the buttons.
+        """Called when the app is mounted. This is a good place to set up event listeners."""
+        self.query_one(RichLog).can_focus = False
+        self.call_after_refresh(self.finished_loading)
 
     def action_toggle_container(self, direction: str) -> None:
         """Toggle the slidecontainer open and closed."""
         slidecontainer = self.query_one(f"#{direction}_slidecontainer", SlideContainer)
         slidecontainer.toggle()
+
+    def action_toggle_borders(self) -> None:
+        """Toggle the borders of the slidecontainers."""
+        # self.query_one("#main_container", Container).toggle_class("bordered")
+        self.query_one("#horizontal_container", Horizontal).toggle_class("bordered")
+        self.query_one("#main_content", Container).toggle_class("bordered")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Toggle the slidecontainer open and closed."""
@@ -171,13 +173,15 @@ class SlideContainerDemo(App[None]):
         direction = event.button.id.split("_")[1]  # remove the `button_` prefix
         self.action_toggle_container(direction)
 
-    @on(SlideContainer.InitClosed)
     def finished_loading(self) -> None:
         """This is a madlad way of making a loading screen. The main container starts
         at opacity 0.0 and fades in to 1.0 when the slidecontainer is done loading."""
 
         self.main_container.styles.animate("opacity", value=1.0, duration=0.3)
         # self.main_container.styles.opacity = 1.0     # this would be the simpler way of doing it.
+
+    def action_log_layers(self) -> None:
+        self.log(self.screen.layers)
 
     @on(SlideContainer.SlideCompleted)
     def slide_completed(self, event: SlideContainer.SlideCompleted) -> None:

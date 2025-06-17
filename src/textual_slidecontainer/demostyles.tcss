@@ -1,0 +1,41 @@
+.slidecontainer { background: $panel; align: center middle;
+    &.leftright {width: 24; height: 1fr; background: $surface;}
+    &.top {width: 1fr; height: 6;}
+    &.bottom {
+        width: 60; height: 6;
+        border: outer $secondary; 
+    }
+}
+
+#right_slidecontainer {
+    height: 70%;
+    border-left: heavy blue;        /* These demonstrate how it can handle borders */
+    border-right: heavy blue;       /* You can disable or change any of these. */
+    border-top: heavy blue;         /* It also supports dynamically modifying the CSS */
+    border-bottom: heavy blue;      /* through Python or dev mode hot reloading. */
+}   
+
+/* The CSS below is just styling for the demo app. Not used by the SlideContainers. */
+#main_container {
+    &.bordered { border: dashed $accent-darken-2; }
+    & > #horizontal_container {
+        &.bordered {border: dashed $primary;}
+        & > #main_content {
+            align: center middle;
+            &.bordered {border: dashed $secondary;}
+            & > .top_docked_text {dock: top; padding: 1;}         
+            & > .bottom_docked_text {dock: bottom; padding: 0 1; width: 1fr; }
+            & > .right_docked_text {dock: right; offset-y: 13;} 
+            & > RichLog {
+                width: 37; 
+                height: 12; 
+                border: tall $primary;
+            }               
+        }
+    }
+} 
+Static {width: auto;}
+Button { &:focus {
+    text-style: none;
+    background-tint: $foreground 10%;
+}}    
