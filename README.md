@@ -25,7 +25,6 @@ It is designed to make it extremely simple to implement sliding menu bars in yor
 - Floating containers automatically dock to the edge they move towards (this can be changed).
 - Change how the animation looks with the duration, fade, and easing_function arguments.
 - Included demo application which has comments in the code.
-![textual-slidecontainer-banner-dark-theme](https://github.com/user-attachments/assets/007a5ac2-5573-404e-96a6-2bc1f32b9170)
 
 ## Demo App
 
