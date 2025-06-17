@@ -270,8 +270,6 @@ class SlideContainer(Container):
 
     def _on_mount(self, event: events.Mount) -> None:
         super()._on_mount(event)
-
-        self.log(f"SlideContainer mounted: {self.styles.layer}")
         self.set_to_starting_position()
 
     @work

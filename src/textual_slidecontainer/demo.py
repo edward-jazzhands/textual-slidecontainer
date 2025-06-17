@@ -63,7 +63,6 @@ class SlideContainerDemo(App[None]):
         Binding("ctrl+s", "toggle_container('bottom')", "Bottom menu"),
         Binding("ctrl+d", "toggle_container('right')", "Right menu"),
         Binding("t", "toggle_borders", "Toggle main screen borders"),
-        Binding("l", "log_layers", "Log layers"),
     ]
 
     TITLE = "Textual-SlideContainer Demo"
@@ -179,9 +178,6 @@ class SlideContainerDemo(App[None]):
 
         self.main_container.styles.animate("opacity", value=1.0, duration=0.3)
         # self.main_container.styles.opacity = 1.0     # this would be the simpler way of doing it.
-
-    def action_log_layers(self) -> None:
-        self.log(self.screen.layers)
 
     @on(SlideContainer.SlideCompleted)
     def slide_completed(self, event: SlideContainer.SlideCompleted) -> None:
