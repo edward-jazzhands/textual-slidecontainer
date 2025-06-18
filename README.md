@@ -48,4 +48,4 @@ Feel free to post an issue.
 
 ## Video
 
-https://github.com/user-attachments/assets/23e40aa7-332b-4f8b-80da-e9a8983a82d0
+https://github.com/user-attachments/assets/0c96a18f-958d-421b-950d-e0c303e774d9
