@@ -12,7 +12,7 @@
 
 This is a library that provides a custom container (widget) called the SlideContainer.
 
-It is designed to make it extremely simple to implement sliding menu bars in yor [Textual](https://github.com/Textualize/textual) apps.
+It is designed to make it extremely simple to implement sliding menu bars in your [Textual](https://github.com/Textualize/textual) apps.
 
 ## Features
 
