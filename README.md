@@ -7,8 +7,10 @@
 
 ![badge](https://img.shields.io/badge/linted-Ruff-blue?style=for-the-badge&logo=ruff)
 ![badge](https://img.shields.io/badge/formatted-black-black?style=for-the-badge)
-![badge](https://img.shields.io/badge/type_checked-MyPy-blue?style=for-the-badge&logo=python)
+![badge](https://img.shields.io/badge/type_checked-MyPy_(strict)-blue?style=for-the-badge&logo=python)
+![badge](https://img.shields.io/badge/Type_checked-Pyright_(strict)-blue?style=for-the-badge&logo=python)
 ![badge](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
+![badge](https://img.shields.io/badge/framework-Textual-blue?style=for-the-badge)
 
 This is a library that provides a custom container (widget) called the SlideContainer.
 
@@ -35,17 +37,17 @@ uvx textual-slidecontainer
 ```
 
 ```sh
-pipx run textual-pyfiglet
+pipx run textual-slidecontainer
 ```
 
 ## Documentation
 
-### [Click here for documentation](https://edward-jazzhands.github.io/libraries/textual-slidecontainer/)
-
-## Questions, issues, suggestions?
-
-Feel free to post an issue.
+### [Click here for documentation](https://edward-jazzhands.github.io/libraries/textual-slidecontainer/docs/)
 
 ## Video
 
 https://github.com/user-attachments/assets/0c96a18f-958d-421b-950d-e0c303e774d9
+
+## Questions, Issues, Suggestions?
+
+Use the [issues](https://github.com/edward-jazzhands/textual-slidecontainer/issues) section for bugs or problems, and post ideas or feature requests on the [TTY group discussion board](https://github.com/orgs/ttygroup/discussions).
