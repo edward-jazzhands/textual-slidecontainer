@@ -1,7 +1,13 @@
-<picture>
+<picture class="only-github">
   <source media="(prefers-color-scheme: dark)" srcset="https://edward-jazzhands.github.io/assets/textual-slidecontainer/banner-dark-theme.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://edward-jazzhands.github.io/assets/textual-slidecontainer/banner-light-theme.png">  
   <img src="https://edward-jazzhands.github.io/assets/textual-slidecontainer/banner-light-theme.png">
 </picture>
+
+<!-- MKDOCS-START
+![banner](https://edward-jazzhands.github.io/assets/textual-slidecontainer/banner-light-theme.png#only-light)
+![banner](https://edward-jazzhands.github.io/assets/textual-slidecontainer/banner-dark-theme.png#only-dark)
+MKDOCS-END -->
 
 # textual-slidecontainer
 
