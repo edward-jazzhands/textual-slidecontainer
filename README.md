@@ -1,16 +1,16 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/6cf8667e-cb64-435d-9c8e-67b3acb0e072">
-  <img src="https://github.com/user-attachments/assets/c424f213-8fa8-4a97-9f0f-6d1fefdfd183">
+  <source media="(prefers-color-scheme: dark)" srcset="https://edward-jazzhands.github.io/assets/textual-slidecontainer/banner-dark-theme.png">
+  <img src="https://edward-jazzhands.github.io/assets/textual-slidecontainer/banner-light-theme.png">
 </picture>
 
 # textual-slidecontainer
 
-![badge](https://img.shields.io/badge/linted-Ruff-blue?style=for-the-badge&logo=ruff)
-![badge](https://img.shields.io/badge/formatted-black-black?style=for-the-badge)
-![badge](https://img.shields.io/badge/type_checked-MyPy_(strict)-blue?style=for-the-badge&logo=python)
-![badge](https://img.shields.io/badge/Type_checked-Pyright_(strict)-blue?style=for-the-badge&logo=python)
-![badge](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
-![badge](https://img.shields.io/badge/framework-Textual-blue?style=for-the-badge)
+[![badge](https://img.shields.io/badge/linted-Ruff-blue?style=for-the-badge&logo=ruff)](https://astral.sh/ruff)
+[![badge](https://img.shields.io/badge/formatted-black-black?style=for-the-badge)](https://github.com/psf/black)
+[![badge](https://img.shields.io/badge/type_checked-MyPy_(strict)-blue?style=for-the-badge&logo=python)](https://mypy-lang.org/)
+[![badge](https://img.shields.io/badge/Type_checked-Pyright_(strict)-blue?style=for-the-badge&logo=python)](https://microsoft.github.io/pyright/)
+[![badge](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](https://opensource.org/license/mit)
+[![badge](https://img.shields.io/badge/framework-Textual-blue?style=for-the-badge)](https://textual.textualize.io/)
 
 This is a library that provides a custom container (widget) called the SlideContainer.
 
@@ -30,7 +30,7 @@ It is designed to make it extremely simple to implement sliding menu bars in you
 
 ## Demo App
 
-If you have uv or Pipx, you can immediately try the demo app:
+If you have [uv](https://docs.astral.sh/uv/) or [pipx](https://pipx.pypa.io/stable/), you can immediately try the demo app:
 
 ```sh
 uvx textual-slidecontainer
@@ -46,7 +46,12 @@ pipx run textual-slidecontainer
 
 ## Video
 
-https://github.com/user-attachments/assets/0c96a18f-958d-421b-950d-e0c303e774d9
+<video style="width: 100%; height: auto;" controls loop>
+  <source src="https://edward-jazzhands.github.io/assets/textual-slidecontainer/demo-handbrake.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+[ ](https://github.com/user-attachments/assets/0c96a18f-958d-421b-950d-e0c303e774d9)
 
 ## Questions, Issues, Suggestions?
 
