@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0 (2025-07-26)
+
+- Upgrade to Textual 5.0.0. Nothing changed in code, seems to have no issue.
+- Added basedpyright as a dev dependency to help with type checking. Made the `just typecheck` command run it after MyPy and set it to 'strict' mode in the config (added [tool.basedpyright] section to pyproject.toml).
+
 ## 0.5.0 (2025-06-17) - Better positioning features
 
 - Breaking Change: The `dock_direction` argument has been removed and replaced with a new `dock_position` argument. The dock_position argument now allows for direct positioning of the SlideContainer in more specific locations:
