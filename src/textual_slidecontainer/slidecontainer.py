@@ -5,7 +5,7 @@
 # ~ Formatting - Black - max 110 characters / line
 
 from __future__ import annotations
-from typing import Literal, get_args
+from typing import Literal, get_args, cast
 import asyncio
 
 # Textual imports
@@ -15,6 +15,7 @@ from textual.geometry import Offset, Size
 from textual.reactive import reactive
 from textual.message import Message
 from textual.widget import Widget
+from textual._animator import Animatable
 import textual.events as events
 
 SLIDE_DIRECTION = Literal["left", "right", "up", "down"]
@@ -332,7 +333,7 @@ class SlideContainer(Container):
 
         self.animate(
             "offset",
-            Offset(offset_x, offset_y),
+            cast(Animatable, Offset(offset_x, offset_y)),
             duration=self.duration,
             easing=self.easing_function,
             on_complete=self._slide_open_completed,
@@ -350,10 +351,15 @@ class SlideContainer(Container):
 
         offset_x, offset_y = await self._calculate_offsets()
 
+        # NOTE: The casting to Animatable here is necessary because of an apparent mismatch
+        # in type hiting between python versions. When type checking this file using python 3.9,
+        # MyPy complains about Offset and says it is not an Animatable type.
+        # This problem does not happen in python 
+
         if self.slide_direction == "left":
             self.animate(
                 "offset",
-                Offset(-(self.size.width + self.get_spacing("horizontal")), offset_y),
+                cast(Animatable, Offset(-(self.size.width + self.get_spacing("horizontal")), offset_y)),
                 duration=self.duration,
                 easing=self.easing_function,
                 on_complete=self._slide_closed_completed,
@@ -361,7 +367,7 @@ class SlideContainer(Container):
         elif self.slide_direction == "right":
             self.animate(
                 "offset",
-                Offset(self.size.width + self.get_spacing("horizontal"), offset_y),
+                cast(Animatable, Offset(self.size.width + self.get_spacing("horizontal"), offset_y)),
                 duration=self.duration,
                 easing=self.easing_function,
                 on_complete=self._slide_closed_completed,
@@ -369,7 +375,7 @@ class SlideContainer(Container):
         elif self.slide_direction == "up":
             self.animate(
                 "offset",
-                Offset(offset_x, -(self.size.height + self.get_spacing("vertical"))),
+                cast(Animatable, Offset(offset_x, -(self.size.height + self.get_spacing("vertical")))),
                 duration=self.duration,
                 easing=self.easing_function,
                 on_complete=self._slide_closed_completed,
@@ -377,7 +383,7 @@ class SlideContainer(Container):
         elif self.slide_direction == "down":
             self.animate(
                 "offset",
-                Offset(offset_x, self.size.height + self.get_spacing("vertical")),
+                cast(Animatable, Offset(offset_x, self.size.height + self.get_spacing("vertical"))),
                 duration=self.duration,
                 easing=self.easing_function,
                 on_complete=self._slide_closed_completed,

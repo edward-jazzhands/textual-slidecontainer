@@ -37,7 +37,9 @@ class MySlideContainer(SlideContainer):
             with Horizontal():
                 yield Button("Hide", id="button_bottom")
                 yield Switch(id="slide_dir_switch")
-                yield Static("Change slide direction. \nCurrently: [yellow]down[/yellow]")
+                yield Static(
+                    "Change slide direction. \nCurrently: [yellow]down[/yellow]", id="slide_dir_label"
+                )
             yield Static(
                 "Fade is [red]off.[/red] " "Default is [yellow]closed.[/yellow] " "Menu is [yellow]floating."
             )
@@ -47,10 +49,14 @@ class MySlideContainer(SlideContainer):
         """Change the slide direction based on the switch state."""
         if event.switch.value:
             self.set_slide_direction("right")
-            self.query_one(Static).update("Change slide direction. \nCurrently: [yellow]right[/yellow]")
+            self.query_one("#slide_dir_label", Static).update(
+                "Change slide direction. \nCurrently: [yellow]right[/yellow]"
+            )
         else:
             self.set_slide_direction("down")
-            self.query_one(Static).update("Change slide direction. \nCurrently: [yellow]down[/yellow]")
+            self.query_one("#slide_dir_label", Static).update(
+                "Change slide direction. \nCurrently: [yellow]down[/yellow]"
+            )
 
 
 class SlideContainerDemo(App[None]):
@@ -67,11 +73,14 @@ class SlideContainerDemo(App[None]):
 
     TITLE = "Textual-SlideContainer Demo"
 
+    def __init__(self) -> None:
+        super().__init__()
+        self.main_container = Container(id="main_container")
+
     def compose(self) -> ComposeResult:
 
         yield Header()
 
-        self.main_container = Container(id="main_container")
         self.main_container.styles.opacity = 0.0  # the madlad loading screen
         with self.main_container:
 
@@ -183,7 +192,7 @@ class SlideContainerDemo(App[None]):
     def slide_completed(self, event: SlideContainer.SlideCompleted) -> None:
 
         rich_log = self.query_one(RichLog)
-        rich_log.write(f"{event.container.id} {"opened" if event.state else "closed"}")
+        rich_log.write(f"{event.container.id} {'opened' if event.state else 'closed'}")
 
 
 def run_demo() -> None:

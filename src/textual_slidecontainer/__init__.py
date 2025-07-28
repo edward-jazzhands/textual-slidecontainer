@@ -1,7 +1,8 @@
 """Textual-SlideContainer
-A Textual widget by Edward Jazzhands.
+Copyright (c) 2025 Edward Jazzhands.
+Licensed under the MIT License.
 
-To import:
+To use:
 ```
 from textual_slidecontainer import SlideContainer
 ```
@@ -12,8 +13,10 @@ Package standards:
 - Formatting - Black - max 110 characters / line
 """
 
+from importlib.metadata import version as get_version
 from textual_slidecontainer.slidecontainer import SlideContainer
 
 __all__ = [
     "SlideContainer",
 ]
+__version__ = get_version("textual_slidecontainer")

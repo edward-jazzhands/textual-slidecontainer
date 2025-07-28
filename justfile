@@ -16,15 +16,16 @@ console:
 
 # Runs ruff, exits with 0 if no issues are found
 lint:
-  uv run ruff check . || (echo "Ruff found issues. Please address them." && exit 1)
+  @uv run ruff check src || (echo "Ruff found issues. Please address them." && exit 1)
 
 # Runs mypy, exits with 0 if no issues are found
 typecheck:
-  uv run mypy . || (echo "Mypy found issues. Please address them." && exit 1)
+  @uv run mypy src || (echo "Mypy found issues. Please address them." && exit 1)
+  @uv run basedpyright src || (echo "BasedPyright found issues. Please address them." && exit 1)
 
 # Runs black
 format:
-  uv run black src
+  @uv run black src
 
 # Runs ruff, mypy, and black
 all-checks: lint typecheck format
@@ -46,13 +47,11 @@ del-env:
   rm -rf uv.lock
 
 # Removes all environment and build stuff
-reset: clean del-env install
-  echo "Environment reset."
+reset: clean clean-caches del-env install
+  @echo "Environment reset."
 
-# Runs all-checks and cleaning stages before building
-build: all-checks clean
-  uv build
-
-# Runs build stage before publishing
-publish: build
-  uv publish
+# Release the kraken
+release:
+  bash .github/scripts/validate_main.sh && \
+  uv run .github/scripts/tag_release.py && \
+  git push --tags
