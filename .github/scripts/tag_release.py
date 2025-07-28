@@ -1,10 +1,10 @@
 # tag_release.py
 import subprocess
-import tomllib # Or `tomli` for Python < 3.11
+import tomli # Or `tomli` for Python < 3.11
 
 # 1. Read the version from the single source of truth
 with open("pyproject.toml", "rb") as f:
-    pyproject_data = tomllib.load(f)
+    pyproject_data = tomli.load(f)
     version = pyproject_data["project"]["version"]
 
 # 2. Construct the tag and the git command
