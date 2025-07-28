@@ -55,3 +55,6 @@ release:
   bash .github/scripts/validate_main.sh && \
   uv run .github/scripts/tag_release.py && \
   git push --tags
+
+sync-tags:
+  git fetch --prune origin "+refs/tags/*:refs/tags/*"
