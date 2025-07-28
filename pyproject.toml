@@ -55,7 +55,6 @@ dev = [
 line-length = 110
 
 [tool.mypy]
-python_version = "3.9"
 pretty = true
 strict = true
 

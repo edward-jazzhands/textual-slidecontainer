@@ -2,7 +2,8 @@
 
 ## 0.6.0 (2025-07-28)
 
-- Upgrade to Textual 5.0.0. Nothing changed in code, seems to have no issue.
+- Upgrade to Textual 5.0.0.
+- Wrapped the `Offset` objects being passed into the `value` argument of the `animate` method in cast calls to cast them as `Animatable` objects. This is to fix a type checking error that was not showing up before for some reason.
 - Added basedpyright as a dev dependency to help with type checking. Made the `just typecheck` command run it after MyPy and set it to 'strict' mode in the config (added [tool.basedpyright] section to pyproject.toml).
 - Added 2 workflow to .github/workflows:
   - ci-checks.yml - runs Ruff, MyPy, BasedPyright (will add Pytest later)

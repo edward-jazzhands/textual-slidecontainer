@@ -47,9 +47,10 @@ del-env:
   rm -rf uv.lock
 
 # Removes all environment and build stuff
-reset: clean del-env install
-  echo "Environment reset."
+reset: clean clean-caches del-env install
+  @echo "Environment reset."
 
+# Release the kraken
 release:
   bash .github/scripts/validate_main.sh && \
   uv run .github/scripts/tag_release.py && \
