@@ -22,12 +22,18 @@ on:
   push:
     tags:
       - "v*" # Runs on any tag starting with "v", e.g., v1.2.3
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name to create release for (e.g., v1.2.3)'
+        required: true
+        type: string
 
 jobs:
   build-and-publish:
     name: Build and Publish
     runs-on: ubuntu-latest
-    # These permissions are required for the actions below.
+    # These permissions are required for the actions below.    
     permissions:
       id-token: write   # Required for Trusted Publishing with PyPI (OIDC).
       contents: write   # Required to create the GitHub Release.
@@ -35,15 +41,32 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          # If manually triggered, checkout the specific tag
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version-file: '.python-version'
 
+      - name: Set tag name
+        id: tag
+        # github.ref_name is the name of the tag that triggered this workflow,
+        # if it was triggered by a tag push and not manually. 
+        # inputs.tag_name is used when the workflow is manually triggered.       
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG_NAME="${{ inputs.tag_name }}"
+          else
+            TAG_NAME="${{ github.ref_name }}"
+          fi
+          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "Using tag: $TAG_NAME"
+
       - name: Verify tag matches version
         run: |
-          TAG_VERSION=${{ github.ref_name }}
+          TAG_VERSION=${{ steps.tag.outputs.tag_name }}
           PYPROJECT_VERSION=$(python -c "import tomli; print(tomli.load(open('pyproject.toml', 'rb'))['project']['version'])")
           if [ "v$PYPROJECT_VERSION" != "$TAG_VERSION" ]; then
             echo "Error: Tag $TAG_VERSION does not match pyproject.toml version v$PYPROJECT_VERSION"
@@ -64,9 +87,9 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          # tag_name: ${{ github.ref_name }}   # <- Note that doing this is not needed, its already set by default
+          tag_name: ${{ steps.tag.outputs.tag_name }}
           # The release title will be "Release vX.X.X" or "Pre-release vX.X.X-rc1"
           # depending on whether a hyphen is present in the tag name.
-          release_name: ${{ startsWith(github.ref_name, 'v') && contains(github.ref_name, '-') && format('Pre-release {0}', github.ref_name) || format('Release {0}', github.ref_name) }}
+          release_name: ${{ startsWith(steps.tag.outputs.tag_name, 'v') && contains(steps.tag.outputs.tag_name, '-') && format('Pre-release {0}', steps.tag.outputs.tag_name) || format('Release {0}', steps.tag.outputs.tag_name) }}
           # Marks the release as a "pre-release" on GitHub if the tag contains a hyphen (e.g., "-rc1").
-          prerelease: ${{ contains(github.ref_name, '-') }}
+          prerelease: ${{ contains(steps.tag.outputs.tag_name, '-') }}
