@@ -50,10 +50,7 @@ del-env:
 reset: clean del-env install
   echo "Environment reset."
 
-# Runs all-checks and cleaning stages before building
-build: all-checks clean
-  uv build
-
-# Runs build stage before publishing
-publish: build
-  uv publish
+release:
+  bash .github/scripts/validate_main.sh && \
+  uv run .github/scripts/tag_release.py && \
+  git push --tags

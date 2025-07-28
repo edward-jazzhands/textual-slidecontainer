@@ -3,10 +3,16 @@
 name: Update Central Docs
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  # Only trigger if the build workflow succeeded
+  workflow_run:
+    workflows: ["Create Release and Publish to PyPI"]
+    types:
+      - completed 
+  # Manual triggering is allowed as well
+  # This allows manual updates to the docs without a new release
+  # To be more professional I should use some kind of 'docs' tag
+  # But this is fine for now.
+  workflow_dispatch:      
 
 
 jobs:
