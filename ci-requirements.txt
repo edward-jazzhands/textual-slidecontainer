@@ -1,5 +1,0 @@
-textual
-black
-ruff
-mypy
-basedpyright
