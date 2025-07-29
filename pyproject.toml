@@ -1,6 +1,6 @@
 [project]
 name = "textual-slidecontainer"
-version = "0.6.0"
+version = "1.0.0"
 description = "A Sliding Container widget for Textual"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -22,12 +22,12 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
 ]
 dependencies = [
-    "textual>=5.0.0",
+    "textual>=3.0.0,<6.0.0"
 ]
 
 [project.urls]
 Repository = "https://github.com/edward-jazzhands/textual-slidecontainer"
-Changelog = "https://github.com/edward-jazzhands/textual-slidecontainer/blob/master/Changelog.md"
+Changelog = "https://github.com/edward-jazzhands/textual-slidecontainer/blob/master/CHANGELOG.md"
 
 [project.scripts]
 textual-slidecontainer = "textual_slidecontainer.demo:run_demo"
@@ -46,7 +46,9 @@ dev = [
     "basedpyright>=1.31.0",
     "black>=24.8.0",
     "mypy>=1.14.1",
-    "python-semantic-release>=10.2.0",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "pytest-textual-snapshot>=1.1.0",
     "ruff>=0.11.8",
     "textual-dev>=1.7.0",
 ]
@@ -61,3 +63,6 @@ strict = true
 [tool.basedpyright]
 include = ["src"]
 typeCheckingMode = "strict"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

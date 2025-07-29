@@ -25,14 +25,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ci-requirements.txt
 
-      - name: Lint code
-        run: ruff check src
-
-      - name: Run type checks
-        run: |
-          mypy src
-          basedpyright src
-
-      # add this when tests are ready
-      # - name: Run tests
-      #   run: pytest        
+      - name: Run Nox
+        uses: wntrblm/nox@2025.05.01  

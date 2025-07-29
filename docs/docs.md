@@ -1,5 +1,10 @@
 # Textual-SlideContainer<br>Documentation and Guide
 
+## Requirements
+
+- Python >= 3.9
+- [Textual](https://textual.textualize.io/) >= 3.71
+
 ## Installation
 
 ```sh
