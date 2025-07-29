@@ -84,6 +84,17 @@ jobs:
         # It avoids the need for storing API tokens as secrets.
         uses: pypa/gh-action-pypi-publish@release/v1
 
+      - name: Extract changelog for release
+        id: changelog
+        run: |
+          VERSION=${{ steps.tag.outputs.tag_name }}
+          VERSION=${VERSION#v}  # Strip leading "v"
+          awk "/## \[${VERSION//./\\.}\]/,/^## \[/" CHANGELOG.md | head -n -1 > body.md
+          # Read the content and set it as output
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
+          cat body.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT        
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -93,3 +104,4 @@ jobs:
           release_name: ${{ startsWith(steps.tag.outputs.tag_name, 'v') && contains(steps.tag.outputs.tag_name, '-') && format('Pre-release {0}', steps.tag.outputs.tag_name) || format('Release {0}', steps.tag.outputs.tag_name) }}
           # Marks the release as a "pre-release" on GitHub if the tag contains a hyphen (e.g., "-rc1").
           prerelease: ${{ contains(steps.tag.outputs.tag_name, '-') }}
+          body: ${{ steps.changelog.outputs.RELEASE_BODY }}
