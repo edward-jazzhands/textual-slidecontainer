@@ -7,6 +7,7 @@
 - Added Nox testing and `noxfile.py` to run tests in different Python versions and across different versions of Textual.
 - Renamed Changelog.md to CHANGELOG.md to follow standard naming conventions.
 - Added pytest, pytest-asyncio, and pytest-textual-snapshot to dev dependencies.
+- Deleted `ci-requirements.txt` as it is no longer needed with the new Nox setup.
 - Changed `ci-checks.yml` to run Nox instead of individual commands for MyPy, Ruff, Pytest, etc.
 
 ## [0.6.0] (2025-07-28)

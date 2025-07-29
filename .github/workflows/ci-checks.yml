@@ -27,8 +27,6 @@ jobs:
 
       - name: Setup Nox
         uses: wntrblm/nox@2025.05.01
-        with:
-          python-version-file: '.python-version'
 
       - name: Run Nox sessions
         run: nox
