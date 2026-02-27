@@ -47,7 +47,7 @@ pipx run textual-slidecontainer
 
 ## Documentation
 
-### [Click here for documentation](https://edward-jazzhands.github.io/libraries/textual-slidecontainer/docs/)
+### [Click here for documentation](https://www.github.com/edward-jazzhands/textual-slidecontainer/blob/main/docs/docs.md)
 
 ## Video
 
@@ -60,4 +60,4 @@ pipx run textual-slidecontainer
 
 ## Questions, Issues, Suggestions?
 
-Use the [issues](https://github.com/edward-jazzhands/textual-slidecontainer/issues) section for bugs or problems, and post ideas or feature requests on the [TTY group discussion board](https://github.com/orgs/ttygroup/discussions).
+Use the [issues](https://github.com/edward-jazzhands/textual-slidecontainer/issues) section for bugs, issues, ideas or feature requests.
